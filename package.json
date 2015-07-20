@@ -4,8 +4,8 @@
   "description": "Captures events from other ensemblejs projects",
   "main": "src/server.js",
   "scripts": {
-    "start": "mkdir events/ && node src/server.js | bunyan",
-    "sync": "s3cmd sync events s3://ensemblejs/events/"
+    "start": "mkdir -p events/ && node src/server.js | bunyan",
+    "sync": "mkdir -p sync/ && mv events/* sync/ && s3cmd sync sync/ s3://ensemblejs/events/ --skip-existing && rm -rf sync"
   },
   "keywords": [
     "auspex",
