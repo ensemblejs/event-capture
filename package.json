@@ -1,0 +1,24 @@
+{
+  "name": "ensemblejs-event-capture",
+  "version": "1.0.0",
+  "description": "Captures events from other ensemblejs projects",
+  "main": "src/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "auspex",
+    "capture",
+    "ensemblejs",
+    "event",
+    "game",
+    "metrics"
+  ],
+  "author": "Ryan Boucher",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.13.2",
+    "express": "^4.13.1",
+    "lodash": "^3.10.0"
+  }
+}
