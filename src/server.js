@@ -6,6 +6,10 @@ var uuid = require('node-uuid');
 var fs = require('fs');
 var logger = require('./logger').logger;
 var expressBunyanLogger = require('express-bunyan-logger');
+var now = require('present');
+var moment = require('moment');
+var getRepoInfo = require('git-repo-info');
+var os = require('os');
 
 var app = express();
 app.use(bodyParser.json());
@@ -30,12 +34,31 @@ app.use(expressBunyanLogger.errorLogger({
 
 var port = process.env.PORT || 3000;
 
-function saveEvent (req, res) {
+function writeEvent(content) {
   var filename = 'events/' + uuid() + '.json';
-  var content = req.body;
-
   fs.writeFile(filename, JSON.stringify(content));
+}
+
+function saveEvent (req, res) {
+  var start = now();
+
+  var content = req.body;
+  writeEvent(content);
   res.sendStatus(200);
+
+  var duration = now() - start;
+
+  var saveEventDuration = {
+    'app-id': 'event-capture',
+    'duration': duration,
+    'name': 'saveEvent',
+    'node-env': process.env.NODE_ENV || 'development',
+    'sha': getRepoInfo().sha,
+    'source': os.hostname(),
+    'timestamp': moment()
+  };
+
+  writeEvent(saveEventDuration);
 }
 
 function respond404 (req, res) {
