@@ -5,7 +5,7 @@
   "main": "src/server.js",
   "scripts": {
     "start": "mkdir -p events/ && node src/server.js | bunyan",
-    "sync": "mkdir -p sync/ && mv events/* sync/ && s3cmd sync sync/ s3://ensemblejs-events/in/ --skip-existing && rm -rf sync"
+    "sync": "mkdir -p sync/ && mv events/* sync/ || true && aws s3 mv sync s3://ensemblejs-events/in/ --recursive"
   },
   "keywords": [
     "auspex",
