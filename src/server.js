@@ -10,6 +10,8 @@ var now = require('present');
 var moment = require('moment');
 var getRepoInfo = require('git-repo-info');
 var os = require('os');
+var mkdirp = require('mkdirp');
+var path = require('path');
 
 var app = express();
 app.use(bodyParser.json());
@@ -35,7 +37,10 @@ app.use(expressBunyanLogger.errorLogger({
 var port = process.env.PORT || 3000;
 
 function writeEvent(content) {
-  var filename = 'events/' + uuid() + '.json';
+  var p = path.join('events/', content['app-id']);
+  var filename = path.join(p, uuid() + '.json');
+
+  mkdirp(p);
   fs.writeFile(filename, JSON.stringify(content));
 }
 
@@ -43,6 +48,7 @@ function saveEvent (req, res) {
   var start = now();
 
   var content = req.body;
+  content['app-id'] = req.params.appId;
   writeEvent(content);
   res.sendStatus(200);
 
@@ -65,7 +71,7 @@ function respond404 (req, res) {
   res.sendStatus(404);
 }
 
-app.post('/event', saveEvent);
+app.post('/event/:appId', saveEvent);
 app.get('*', respond404);
 
 app.listen(port, function () {
