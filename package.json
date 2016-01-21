@@ -4,9 +4,7 @@
   "description": "Captures events from other ensemblejs projects",
   "main": "src/server.js",
   "scripts": {
-    "start": "mkdir -p events/ && node src/server.js | bunyan",
-    "sync": "mkdir -p sync/ && mv events/* sync/ || true && aws s3 mv sync s3://ensemblejs-events/in/ --recursive"
-  },
+    "start": "node src/server.js | bunyan"  },
   "keywords": [
     "auspex",
     "capture",
@@ -19,11 +17,15 @@
   "license": "ISC",
   "dependencies": {
     "app-root-path": "^1.0.0",
+    "aws-sdk": "^2.2.31",
+    "aws-sdk-promise": "0.0.2",
     "body-parser": "^1.13.2",
     "bunyan": "^1.4.0",
+    "cors": "^2.7.1",
     "express": "^4.13.1",
     "express-bunyan-logger": "^1.1.1",
     "git-repo-info": "^1.1.2",
+    "lodash": "^4.0.0",
     "mkdirp": "^0.5.1",
     "moment": "^2.11.1",
     "node-uuid": "^1.4.7",
