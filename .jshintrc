@@ -16,9 +16,10 @@
 	"undef": true,
 	"unused": true,
 	"strict": true,
-	"maxparams": 5,
+	"maxparams": false,
 	"maxdepth": 2,
 	"maxcomplexity": 5,
+	"esversion": 6,
 	"node": true,
 	"globals": {
 	    "describe": false,
@@ -26,6 +27,7 @@
 	    "beforeEach": false,
 	    "afterEach": false,
 	    "before": false,
-	    "after": false
+	    "after": false,
+	    "Modernizr": false
 	}
 }

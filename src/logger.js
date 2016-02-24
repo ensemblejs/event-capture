@@ -1,8 +1,9 @@
 'use strict';
 
-var appRoot = require('app-root-path');
-var packageInfo = require(appRoot + '/package.json');
-var logger = require('bunyan').createLogger({
+let appRoot = require('app-root-path');
+let packageInfo = require(appRoot + '/package.json');
+
+export let logger = require('bunyan').createLogger({
   name: packageInfo.name,
   version: packageInfo.version,
   streams: [
@@ -13,6 +14,16 @@ var logger = require('bunyan').createLogger({
   ]
 });
 
-module.exports = {
-  logger: logger
-};
+import * as consoleColour from 'js-console-color';
+
+consoleColour.envAssign({
+  debug: ['blue', 'dim'],
+  info: ['black'],
+  warn: ['bgYellow', 'black'],
+  error: ['bgRed', 'black']
+});
+
+export let debug = consoleColour.debug;
+export let info = consoleColour.info;
+export let warn = consoleColour.warn;
+export let error = consoleColour.error;
